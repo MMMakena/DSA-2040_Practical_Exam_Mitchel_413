@@ -279,3 +279,12 @@ def full_etl_process(excel_path, db_path):
 ***Split data***
 - Split the data int train(80) and test(20)
 - This was the output :***Train shape: (120, 7), Test shape: (30, 7)***
+
+## Task 2 : Clustering
+- File name : `clustering_iris.ipynb`
+- Load the preprocessed data from the data preprocessing output `preprocessed_iris.csv`.
+- Applied K-Means clustering from scikit-learn with k=3 (since 3 cluster)
+- Fit the model on feature(exclude class) and predicted clusters and compared with actual classes using Adjusted Rand Index(ARI)
+- Tries using k= 2 and k= 4 and plotted an elbow curve to justify optimal k.
+- Vizulized the clusters using 
+- Analysis on cluster quality, missclassifications and real-world applications.
