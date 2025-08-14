@@ -286,5 +286,72 @@ def full_etl_process(excel_path, db_path):
 - Applied K-Means clustering from scikit-learn with k=3 (since 3 cluster)
 - Fit the model on feature(exclude class) and predicted clusters and compared with actual classes using Adjusted Rand Index(ARI)
 - Tries using k= 2 and k= 4 and plotted an elbow curve to justify optimal k.
-- Vizulized the clusters using 
-- Analysis on cluster quality, missclassifications and real-world applications.
+
+![alt text](images/elbow_curve_iris.png)
+
+- Visualized the clusters using matplotlib and the variables sepal length vs width, colored by cluster
+
+![alt text](images/cluster_scatter_sepal.png)
+
+- Analysis on cluster quality, missclassifications and real-world applications. In practice, most data points are grouped correctly, but some misclassifications occur, especially for samples near the boundaries between species. For example, the overlap between versicolor and virginica can lead to ambiguous assignments, since K-Means relies on feature similarity and does not use label information. More explanations in the report `clustering.md`
+
+## Task 3 : Classification and Association Rule
+### Part A : Classification
+***1. Train a Decision Tree clasifier on train set***
+- Predict on test set;compute accuracy, precision, recall, F1-score
+
+![images/image4.png](images/image4.png)
+
+- Visualize the tree
+![alt text](images/decision_tree_iris.png)
+
+***2. Compare with another classifier (KNN) and report which is better***
+```
+KNN Accuracy: 1.000
+KNN Precision: 1.000
+KNN Recall: 1.000
+KNN F1-score: 1.000
+
+KNN Classification Report:
+               precision    recall  f1-score   support
+
+           0       1.00      1.00      1.00        10
+           1       1.00      1.00      1.00         9
+           2       1.00      1.00      1.00        11
+
+    accuracy                           1.00        30
+   macro avg       1.00      1.00      1.00        30
+weighted avg       1.00      1.00      1.00        30
+
+Both classifiers perform equally well on this test set.
+```
+
+### Part B : Association Rule 
+***Generate transactional data***
+```Transaction
+0                [rice, tomatoes, chips, milk, eggs]
+1              [apples, cheese, diapers, milk, eggs]
+2                          [chicken, apples, cheese]
+3  [butter, bread, apples, chips, bananas, yogurt...
+4          [juice, beer, tomatoes, lettuce, diapers]
+```
+
+***1. Apply Apriori algorithm***
+- Find rules with min_support = 0.2, min_confidence=0.5
+- Sort by lift and display top 5 rules
+```
+antecedents consequents   support  confidence      lift
+6    (cheese)      (eggs)  0.294118    0.714286  1.868132
+7      (eggs)    (cheese)  0.294118    0.769231  1.868132
+3      (milk)     (bread)  0.294118    0.588235  1.818182
+4     (bread)      (milk)  0.294118    0.909091  1.818182
+5    (cereal)   (diapers)  0.235294    0.800000  1.431579
+```
+- Visualization of the rule analysis
+
+![alt text](images/association_rules_lift.png)
+
+***2. Analyze : Discuss one rule's implications***
+- One of the key links discovered could be: ***{milk} → {bread}***, with a high ***level of support, trust, and lift***. This principle suggests that consumers who purchase dairy products tend to also purchase bread, and this probability is considerably higher than chance ( as  evidenced  by  the  lift  assessment  ).  
+- In a retail setting , this perspective can guide store design and promotions —placing dairy and bread products next   to  each  other  or  grouping  them  in  sales  can  increase  sales  .  Additionally  , it aids   in  inventory  planning  ,  ensuring  that  both  products  are  stocked  together  to  meet  customer  demand  .  These  rules  are  useful  for  cross  -  selling  strategies  and  for  improving  the  overall  shopping  experience  .
+
